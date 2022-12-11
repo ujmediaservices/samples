@@ -351,7 +351,7 @@ Resources:
   myDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: MyTable
+      TableName: !Ref TableName
       AttributeDefinitions:
       - AttributeName: !Ref 'HashKeyElementName'
         AttributeType: !Ref 'HashKeyElementType'
@@ -511,7 +511,9 @@ Resources:
               - 'dynamodb:DeleteItem'
               - 'dynamodb:UpdateItem'
               - 'dynamodb:PutItem'
-            Resource: !Sub 'arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/MyTable' 
+            Resource: !Sub 
+              - 'arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoTableName}'
+              - DynamoTableName: !Ref TableName 
 Outputs:
   URL:
     Description: URL of the website
